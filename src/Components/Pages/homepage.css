@@ -1,0 +1,40 @@
+.color_container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    grid-template-rows: repeat(3, minmax(200px, 1fr));
+}
+
+.item1{
+    grid-row: 1 / span 2;
+    grid-column: 1/2;
+    background-color: rgba(67, 124, 124, 0.969);
+}
+
+.item2 {
+    grid-column: 1 / span 2;
+    background-color: rgb(121, 154, 159);
+}
+
+.item3{
+    grid-column: 2 / -1;
+    grid-row: 1;
+    background: rgb(121, 30, 30);
+}
+
+.item4{
+    grid-row: 3 / 2;
+    background-color: var(--my-color);
+    display: flex;
+    justify-content: center; 
+    align-items: center;                  
+}
+
+.item5{
+    grid-row: -3 / -1;
+    background-color: rgb(205, 148, 42);
+}
+
+.item4 > h1{
+    margin: 0;
+    color: #fff;
+}

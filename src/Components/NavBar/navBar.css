@@ -1,0 +1,52 @@
+.nav_bar {
+    height: 85px;
+    background-color: #f9f4f4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+}
+
+.nav_bar > div{
+    display: flex;
+    align-items: center;
+}
+
+.nav_bar > div ul {
+    display: flex;
+    align-items: center; 
+    border: 1px solid var(--my-color);
+    border-radius: 30px;
+    background-color: transparent;
+    margin-left: 40px;
+}
+
+.nav_bar > div ul li {
+    flex: 1; 
+    text-align: center; 
+}
+
+.nav_bar > div ul li a {
+    display: block;
+    padding: 15px 40px;
+    text-decoration: none;
+    color: black; 
+    border-radius: 30px; 
+}
+
+.nav_bar > div ul li a.active {
+    background-color: var(--my-color);
+    color: #fff; 
+}
+
+.nav_bar > button {
+    background-color: var(--my-color);
+    color: #fff;
+    font-family: var(--font-family);
+    font-size: 16px;
+    font-weight: 400;
+    padding: 15px 30px;
+    border-radius: 10px;
+}
+
+
