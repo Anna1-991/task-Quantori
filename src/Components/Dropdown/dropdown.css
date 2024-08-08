@@ -1,0 +1,41 @@
+.dropdown{
+    position: absolute;
+    top: 65px;
+    right: 30px;
+    max-width: 200px;
+    width: 100%;
+    background-color: #f9f4f4;
+    border: 2px solid var(--my-color);
+    border-radius: 8px;
+}
+
+.dropdown > ul {
+    margin-top: 15px;
+}
+
+.dropdown > ul li a.active {
+    background-color: var(--my-color);
+    color: #fff; 
+}
+
+.dropdown ul li a {
+    font-size: 16px;
+    font-weight: 400;
+    font-family: var(--font-family);
+    display: block;
+    padding: 15px 40px;
+    border-radius: 30px; 
+    text-align: center;
+}
+
+.dropdown > button {
+    background-color: var(--my-color);
+    color: #fff;
+    font-family: var(--font-family);
+    font-size: 16px;
+    font-weight: 400;
+    padding: 15px 30px;
+    border-radius: 10px;
+    margin: 20px 50px;
+    display: flex;
+}

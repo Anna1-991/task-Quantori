@@ -1,66 +1,65 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import "./loginForm.css";
+import { useLoginForm } from "../../hooks/useLoginForm";
 
 interface LoginFormProps {
     onCancel: () => void;
     onLoginSuccess: () => void;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onCancel, onLoginSuccess }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState<string | null>(null);
+export const LoginForm: React.FC<LoginFormProps> = ({
+    onCancel,
+    onLoginSuccess,
+}) => {
+    const [isAnimatingOut, setIsAnimatingOut] = useState(false);
+    const {
+        email,
+        password,
+        setEmail,
+        setPassword,
+        handleSubmit,
+        isLoading,
+        isFormVisible,
+        error
+    } = useLoginForm(onLoginSuccess);
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-        
-        try {
-            console.log('Form submitted with:', { email, password });
-            
-            const response = await fetch('https://dummyjson.com/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    username: email,
-                    password,
-                    expiresInMins: 30,
-                }),
-            });
-    
-            console.log('API response status:', response.status);
-            
-            if (!response.ok) {
-                throw new Error('Login failed');
-            }
-    
-            const data = await response.json();
-            console.log('Login successful:', data);
-    
-            setError(null);
-            if (onLoginSuccess) onLoginSuccess();
-        } catch (err: unknown) {
-            if (err instanceof Error) {
-                console.error('Error occurred:', err.message);
-                setError(err.message);
-            } else {
-                console.error('Unexpected error:', err);
-                setError('An unexpected error occurred');
-            }
-        }
+    if (!isFormVisible && !isAnimatingOut) {
+        return null;
+    }
+
+    const formVariants = {
+        hidden: { opacity: 0, scale: 0.8 },
+        visible: { opacity: 1, scale: 1 },
+        animateOut: { opacity: 0, scale: 0.8 },
     };
+
+    const handleCancelClick = () => {
+        setIsAnimatingOut(true);
+        setTimeout(() => {
+            onCancel();
+        }, 500);
+    };
+
     return (
-        <div className="login_form">
+        <motion.div
+            className="login_form"
+            initial="hidden"
+            animate={isAnimatingOut ? "animateOut" : "visible"}
+            variants={formVariants}
+            transition={{ duration: 0.5 }}
+        >
             <div>
                 <h3>Login</h3>
                 <form onSubmit={handleSubmit}>
                     <div className="input_wrapper">
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="text">Email</label>
                         <input
-                            type="email"
+                            type="text"
                             id="email"
                             name="email"
                             value={email}
-                            onChange={e => setEmail(e.target.value)}
+                            onChange={(e) => setEmail(e.target.value)}
                             required
                         />
                     </div>
@@ -71,17 +70,21 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onCancel, onLoginSuccess }
                             id="password"
                             name="password"
                             value={password}
-                            onChange={e => setPassword(e.target.value)}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
                         />
                     </div>
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                    {error && <div className="error_message">{error}</div>}
                     <div className="buttons">
-                        <button type="button" onClick={onCancel}>Cancel</button>
-                        <button type="submit">Login</button>
+                        <button type="button" onClick={handleCancelClick}>
+                            Cancel
+                        </button>
+                        <button type="submit" disabled={isLoading}>
+                            {isLoading ? "Logging in..." : "Login"}
+                        </button>
                     </div>
                 </form>
             </div>
-        </div>
+        </motion.div>
     );
 };

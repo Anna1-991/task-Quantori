@@ -29,8 +29,6 @@
 .nav_bar > div ul li a {
     display: block;
     padding: 15px 40px;
-    text-decoration: none;
-    color: black; 
     border-radius: 30px; 
 }
 
@@ -49,4 +47,12 @@
     border-radius: 10px;
 }
 
+@media (max-width: 768px) {
+    .nav_bar {
+        display: none;
+    }
 
+    .mobile_navbar {
+        display: block;
+    }
+}
